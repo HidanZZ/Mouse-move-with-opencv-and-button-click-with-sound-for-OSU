@@ -1,6 +1,6 @@
 import voice
 import objectDetection
-from multiprocessing import Process
+from threading import Thread
 from directkey import releasekey, presskey, A
 
 detect = objectDetection.ObjectDetection()
@@ -14,10 +14,9 @@ def voiceclick():
         else:
             releasekey(A)
 
-
-p1 = Process(target=detect.detect())
-p2 = Process(target=voiceclick())
-p1.start()
+p2 = Thread(target=voiceclick)
 p2.start()
+p1 = Thread(target=detect.detect)
+p1.start()
 p1.join()
 p2.join()
