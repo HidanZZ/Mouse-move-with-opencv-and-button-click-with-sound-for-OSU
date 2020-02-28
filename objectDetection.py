@@ -4,8 +4,8 @@ import pyautogui as pag
 
 
 class ObjectDetection:
-    blueLower = np.array([88, 131, 82])
-    blueUpper = np.array([111, 255, 255])
+    LowerColor = np.array([88, 131, 82])
+    UpperColor = np.array([111, 255, 255])
     kernel = np.ones((5, 5), np.uint8)
     camera = cv2.VideoCapture(0)
 
@@ -25,7 +25,7 @@ class ObjectDetection:
             p2 = (14 * width // 15, 5 * height // 6)
             cv2.rectangle(frame, p1, p2, (0, 0, 0), 2)
             # Determine which pixels fall within the blue boundaries and then blur the binary image
-            blueMask = cv2.inRange(hsv, self.blueLower, self.blueUpper)
+            blueMask = cv2.inRange(hsv, self.LowerColor, self.UpperColor)
             blueMask = cv2.erode(blueMask, self.kernel, iterations=2)
             blueMask = cv2.morphologyEx(blueMask, cv2.MORPH_OPEN, self.kernel)
             blueMask = cv2.dilate(blueMask, self.kernel, iterations=1)
